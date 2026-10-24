@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" data-store="all">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex Casino Tycoon — Build a global casino, hotel, and resort empire.</title>
+<meta name="description" content="Build a casino, hotel and resort empire from one roadside motel to fifty countries. Deep tycoon simulation with real casino mathematics.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#12302e">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="canonical" href="https://ddkits.github.io/apexcasinotycoon-site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apex Casino Tycoon">
+<meta property="og:title" content="Apex Casino Tycoon — Build a global casino, hotel, and resort empire.">
+<meta property="og:description" content="Build a casino, hotel and resort empire from one roadside motel to fifty countries. Deep tycoon simulation with real casino mathematics.">
+<meta property="og:url" content="https://ddkits.github.io/apexcasinotycoon-site/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
+<meta name="twitter:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
+<style>
+  :root { color-scheme: light dark; --bg:#ffffff; --fg:#17202a; --dim:#4a5560; --accent:#0a5dc2; --line:#7d8794; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0f14; --fg:#e8edf2; --dim:#9aa7b4; --accent:#6ab1ff; --line:#6b7683; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .skip { position:absolute; left:-9999px; }
+  .skip:focus { left:8px; top:8px; padding:8px 12px; background:var(--accent); color:#fff; z-index:10; }
+  header, main, footer { max-width:46rem; margin:0 auto; padding:1.5rem 1.25rem; }
+  /* A design identity every non-landing page carries too, not just index: a coloured top stripe,
+     an accented brand mark, and a left-border marker on every section heading -- all off the same
+     --accent config/site-design.json already drives, so a palette redesign actually shows up
+     everywhere, not just behind the hero. */
+  header { display:flex; flex-wrap:wrap; gap:1rem; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--line); border-top:4px solid var(--accent); }
+  nav a { margin-right:1rem; }
+  a { color:var(--accent); }
+  a:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .5rem; }
+  h2 { font-size:1.25rem; margin-top:2rem; padding-left:.75rem; border-left:.3rem solid var(--accent); }
+  .brand { font-weight:700; font-size:1.05rem; color:var(--accent); text-decoration:none; }
+  .updated { color:var(--dim); font-size:.9rem; }
+  /* Google's widget injects a top banner frame while a translation is active, which pushes body
+     down by its own height unless suppressed -- and re-colours <body> itself, so both are pinned. */
+  .translate { font-size:.85rem; max-width:11rem; }
+  .goog-te-banner-frame { display:none !important; }
+  body { top:0 !important; }
+  footer { border-top:1px solid var(--line); color:var(--dim); font-size:.9rem; }
+  footer .social { display:flex; gap:.9rem; margin-top:.5rem; }
+  footer .social a { display:inline-flex; color:var(--dim); }
+  footer .social a:hover, footer .social a:focus-visible { color:var(--accent); }
+  footer .social svg { width:1.4rem; height:1.4rem; fill:currentColor; }
+  ul { padding-left:1.25rem; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+  body.landing main { max-width:none; padding:0; }
+  .lockup { width:min(78vw, 34rem); height:auto; }
+  .title { font-size:clamp(2.2rem, 6vw, 4rem); margin:0; letter-spacing:-.02em; }
+  .badges { display:flex; flex-wrap:wrap; gap:.75rem; }
+  /* A real default, not just shared layout: every specific layout below overrides this, but the
+     'custom' layout's own CSS only has to scope .hero-ai, never re-style the shared badges/pills --
+     without this, an AI-designed hero with no opinion on button colour left them looking like plain
+     unstyled text links, which is exactly what shipped once before this was added. */
+  .badge { display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1.1rem; border-radius:999px; text-decoration:none; font-weight:700; background:var(--accent); color:#fff; border:1px solid var(--accent); }
+  .badge svg { width:1.25rem; height:1.25rem; }
+  /* Trust pills (config-grounded: no ads, offline, age rating — see trustBadgesHtml()) sit between
+     the description and the store badges, the same "quick reassurance before the ask" placement a
+     well-executed reference landing page uses. */
+  .trust { display:flex; flex-wrap:wrap; gap:.5rem; margin:0 0 1.25rem; }
+  .pill { display:inline-flex; align-items:center; gap:.4rem; padding:.4rem .85rem; border-radius:999px; font-size:.85rem; font-weight:600; background:#fff; color:#17202a; }
+
+  /* layout: full-bleed -- the original cover-image hero with white text over a dark scrim. */
+  body.layout-full-bleed header { max-width:none; position:absolute; inset:0 0 auto 0; border:0; z-index:2; color:#fff; }
+  body.layout-full-bleed header .brand, body.layout-full-bleed header nav a { color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.5); }
+  .layout-full-bleed .hero { position:relative; min-height:82vh; display:grid; place-items:center; background:#0B1220 center/cover no-repeat; color:#fff; text-align:center; }
+  .layout-full-bleed .hero-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,12,21,.35) 0%, rgba(7,12,21,.15) 40%, rgba(7,12,21,.85) 100%); }
+  .layout-full-bleed .hero-inner { position:relative; padding:6rem 1.25rem 3rem; max-width:52rem; }
+  .layout-full-bleed .lockup { filter:drop-shadow(0 4px 18px rgba(0,0,0,.45)); }
+  .layout-full-bleed .tagline { font-size:clamp(1.15rem, 2.6vw, 1.6rem); font-weight:700; margin:1rem 0 .5rem; color:#FFD770; text-shadow:0 2px 12px rgba(0,0,0,.5); }
+  .layout-full-bleed .lede { max-width:40rem; margin:0 auto 1.5rem; color:#EDF1F7; text-shadow:0 1px 8px rgba(0,0,0,.6); }
+  .layout-full-bleed .trust { justify-content:center; }
+  .layout-full-bleed .badges { justify-content:center; }
+  .layout-full-bleed .badge { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.35); color:#fff; backdrop-filter:blur(6px); }
+  .layout-full-bleed .badge:hover, .layout-full-bleed .badge:focus-visible { background:#F5B83D; color:#0B1220; border-color:#F5B83D; }
+
+  /* layout: split -- image and copy side by side on the ordinary page background, no overlay. A
+     professional-SaaS feel: text is readable, high-contrast, themeable the same way inner pages are. */
+  .hero-split { display:grid; grid-template-columns:1.1fr 1fr; align-items:center; gap:2rem; max-width:72rem; margin:0 auto; padding:4rem 1.25rem; min-height:min(70vh, 34rem); }
+  .hero-split .hero-content { text-align:left; }
+  .hero-split .tagline { font-size:clamp(1.15rem, 2.6vw, 1.6rem); font-weight:700; margin:1rem 0 .5rem; color:var(--accent); }
+  .hero-split .lede { max-width:34rem; margin:0 0 1.5rem; color:var(--dim); }
+  .hero-split .trust { justify-content:flex-start; }
+  .hero-split .pill { border:1px solid var(--line); }
+  .hero-split .badges { justify-content:flex-start; }
+  .hero-split .badge { background:var(--accent); color:#fff; border:1px solid var(--accent); }
+  .hero-split .badge:hover, .hero-split .badge:focus-visible { background:#F5B83D; border-color:#F5B83D; }
+  .hero-split .hero-media img { width:100%; height:auto; border-radius:1.25rem; box-shadow:0 16px 40px rgba(0,0,0,.25); }
+  @media (max-width:48rem) { .hero-split { grid-template-columns:1fr; text-align:center; padding-top:1.5rem; } .hero-split .hero-content { text-align:center; } .hero-split .badges, .hero-split .trust, .hero-split .lede { justify-content:center; margin-left:auto; margin-right:auto; } }
+
+  /* layout: stacked-cards -- a compact, text-first banner, then the key art as its own full-width
+     showcase module underneath rather than a backdrop behind the text. */
+  .hero-compact { max-width:44rem; margin:0 auto; padding:3rem 1.25rem 1.5rem; text-align:center; }
+  .hero-compact .tagline { font-size:clamp(1.15rem, 2.6vw, 1.6rem); font-weight:700; margin:1rem 0 .5rem; color:var(--accent); }
+  .hero-compact .lede { margin:0 0 1.5rem; color:var(--dim); }
+  .hero-compact .trust { justify-content:center; }
+  .hero-compact .pill { border:1px solid var(--line); }
+  .hero-compact .badges { justify-content:center; }
+  .hero-compact .badge { background:var(--accent); color:#fff; border:1px solid var(--accent); }
+  .hero-compact .badge:hover, .hero-compact .badge:focus-visible { background:#F5B83D; border-color:#F5B83D; }
+  .hero-banner { max-width:72rem; margin:0 auto 1rem; padding:0 1.25rem; }
+  .hero-banner img { width:100%; height:auto; border-radius:1.25rem; box-shadow:0 16px 40px rgba(0,0,0,.2); }
+
+  .features, .shots, .worlds, .member, .support { max-width:64rem; margin:0 auto; padding:3rem 1.25rem; }
+  .features h2, .shots h2, .worlds h2, .member h2, .support h2 { font-size:1.6rem; margin:0 0 1.25rem; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:1rem; }
+  .card { border:1px solid var(--line); border-radius:1rem; padding:1.1rem 1.2rem; background:linear-gradient(160deg, rgba(46,196,182,.10), rgba(245,184,61,.08)); }
+  .card .glyph { font-size:1.6rem; display:block; margin-bottom:.4rem; }
+  .card p { margin:0; }
+  .strip { display:flex; gap:.75rem; overflow-x:auto; padding-bottom:.5rem; scroll-snap-type:x mandatory; }
+  .strip .thumb img { height:clamp(11rem, 26vw, 16rem); width:auto; border-radius:.9rem; box-shadow:0 8px 24px rgba(0,0,0,.25); }
+  .strip .thumb { scroll-snap-align:start; }
+  .worlds-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem, 1fr)); gap:.75rem; }
+  .worlds-grid .thumb img { width:100%; height:auto; border-radius:1rem; }
+  /* Every screenshot/key-art image is a real, keyboard-operable button that opens it full-size in
+     a native <dialog> -- no click-to-zoom library, no framework: showModal()/close() and the
+     ::backdrop pseudo-element are built into every browser this site needs to support. */
+  .thumb { display:block; padding:0; border:0; background:none; cursor:zoom-in; border-radius:.9rem; }
+  .thumb img { display:block; }
+  .thumb:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .lightbox { border:0; padding:0; background:transparent; max-width:min(92vw, 60rem); max-height:88vh; }
+  .lightbox::backdrop { background:rgba(7,12,21,.88); }
+  .lightbox img { display:block; max-width:100%; max-height:88vh; border-radius:.5rem; }
+  .lightbox-close { position:absolute; top:-.25rem; right:-.25rem; width:2.5rem; height:2.5rem; border-radius:999px; border:0; background:#fff; color:#111; font-size:1.5rem; line-height:1; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.35); }
+  .lightbox-close:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .member { text-align:center; background:linear-gradient(120deg, #16233A, #0B1220); color:#EDF1F7; border-radius:1.25rem; }
+  .member h2 { color:#FFD770; }
+  .legal { columns:2; padding-left:1.25rem; }
+  .credit { color:var(--dim); font-size:.9rem; margin:0 0 1.5rem; }
+  body.landing { --bg:#101216; --fg:#f4f2ed; --dim:#b4b5b5; --accent:#ef7547; --line:#34383d; color-scheme:dark; background:var(--bg); }
+  body.landing header { max-width:78rem; padding:1rem 2rem; border:0; border-bottom:1px solid #34383d; }
+  body.landing header nav { display:flex; flex-wrap:wrap; gap:1.25rem; }
+  body.landing header nav a { margin:0; color:#d7d8d8; text-decoration:none; font-size:.92rem; }
+  .layout-split .hero-split { max-width:72rem; min-height:34rem; margin:0 auto; padding:5.5rem 2rem 4rem; grid-template-columns:minmax(0, .95fr) minmax(0, 1.05fr); }
+  .layout-split .hero-split.hero-text-only .hero-content { max-width:54rem; text-align:start; }
+  .layout-split .hero-split .title { color:#faf8f3; font-size:clamp(3.4rem, 8vw, 6.8rem); letter-spacing:-.065em; line-height:.95; }
+  .layout-split .hero-split .lockup { width:min(54vw, 30rem); filter:brightness(0) invert(1); }
+  .layout-split .hero-split .tagline { color:#f08a5b; font-size:clamp(1.2rem, 2.5vw, 1.75rem); font-weight:650; margin:1.7rem 0 .4rem; }
+  .layout-split .hero-split .lede { color:#c6c8c9; max-width:43rem; margin:0 0 1.4rem; }
+  .layout-split .hero-split .trust { margin-inline:0; }
+  .layout-split .hero-split .pill { border:1px solid #363a3f; background:#1d2024; color:#d6d7d7; }
+  .layout-split .hero-split .badges { gap:.7rem; }
+  .layout-split .hero-split .badge { min-height:3rem; border-radius:.45rem; padding:.7rem 1rem; background:#ed7042; border-color:#ed7042; }
+  .landing .features, .landing .gallery, .landing .support { max-width:72rem; margin:0 auto; padding:3rem 2rem; }
+  .landing .features h2, .landing .gallery h2, .landing .support h2 { border:0; padding:0; font-size:clamp(1.7rem, 3vw, 2.35rem); letter-spacing:-.035em; }
+  .landing .grid { grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:.85rem; }
+  .landing .card { background:#191c20; border:1px solid #2e3237; border-radius:.55rem; padding:1.25rem; }
+  .landing .card p { color:#d5d6d6; }
+  .landing .glyph { color:#ef7547; }
+  .gallery-filters { display:flex; flex-wrap:wrap; gap:.55rem; margin:1rem 0 1.25rem; }
+  .gallery-filters button { border:1px solid #44494f; background:#1a1d21; color:#e3e3e1; padding:.55rem .9rem; border-radius:2rem; font:inherit; cursor:pointer; }
+  .gallery-filters button[aria-pressed="true"] { background:#ef7547; color:#17191b; border-color:#ef7547; font-weight:700; }
+  .gallery-card { min-width:0; margin:0; overflow:hidden; border:1px solid #34383d; border-radius:.6rem; background:#191c20; }
+  .gallery-card[hidden] { display:none; }
+  .gallery-card .thumb { width:100%; border-radius:0; cursor:zoom-in; }
+  .gallery-card .thumb img { width:100%; aspect-ratio:16/9; object-fit:cover; }
+  .gallery-card figcaption { padding:.8rem 1rem; color:#d5d6d6; font-size:.92rem; }
+  .landing .worlds-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%, 26rem),1fr)); gap:1rem; }
+  .landing .support { border-top:1px solid #34383d; }
+  .landing .support a { color:#ff956e; }
+  @media (max-width:44rem) { body.landing header { padding:.85rem 1rem; align-items:center; } body.landing header nav { gap:.7rem; font-size:.82rem; } .layout-split .hero-split { min-height:28rem; padding:4rem 1.2rem 2rem; } .landing .features, .landing .gallery, .landing .support { padding:2rem 1.2rem; } }
+  @media (max-width:40rem) { .legal { columns:1; } .layout-full-bleed .hero { min-height:70vh; } }
+
+  [data-when] { display:none; }
+  html[data-store="all"] [data-when~="all"],
+  html[data-store="ios"] [data-when~="ios"],
+  html[data-store="android"] [data-when~="android"] { display:inline; }
+  html[data-store="all"] .badge[data-when~="all"],
+  html[data-store="ios"] .badge[data-when~="ios"],
+  html[data-store="android"] .badge[data-when~="android"] { display:inline-flex; }
+</style>
+<script>(function(){var m=/[?&]platform=(ios|android|web)\b/.exec(location.search),p=m&&m[1];
+if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
+:(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
+if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+// Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
+// runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
+// and focus trapping come free with showModal(); only the backdrop click and the close button need
+// wiring by hand.
+document.addEventListener('click',function(e){
+  var f=e.target.closest('[data-gallery-filter]');
+  if(f){var key=f.getAttribute('data-gallery-filter');document.querySelectorAll('[data-gallery-filter]').forEach(function(b){b.setAttribute('aria-pressed',String(b===f));});document.querySelectorAll('[data-gallery-category]').forEach(function(card){card.hidden=key!=='all'&&card.getAttribute('data-gallery-category')!==key;});return;}
+  var t=e.target.closest('.thumb');
+  if(t){var d=document.querySelector('.lightbox');if(!d)return;var img=d.querySelector('img');
+    img.src=t.getAttribute('data-full');img.alt=t.getAttribute('aria-label')||'';d.showModal();return;}
+  if(e.target.closest('.lightbox-close')){var d2=e.target.closest('.lightbox');if(d2)d2.close();return;}
+  if(e.target.classList&&e.target.classList.contains('lightbox'))e.target.close();
+});})();</script>
+</head>
+<body class="landing layout-full-bleed">
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <a class="brand" href="./">Apex Casino Tycoon</a>
+  <nav aria-label="Page"><a href="#experience">Experience</a><a href="#gallery">Screenshots</a><a href="#download">Download</a></nav>
+  <div id="google_translate_element" class="translate" aria-label="Translate this page"></div>
+</header>
+<main id="main">
+<h1 class="sr-only">Apex Casino Tycoon</h1>
+
+
+<section class="hero" >
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <img class="lockup" src="assets/logo.svg" alt="Apex Casino Tycoon">
+    <p class="tagline">Build a global casino, hotel, and resort empire.</p>
+    <p class="lede">Experience a deep tycoon simulation featuring real casino mathematics. Grow your business from a single roadside motel into a massive international empire.</p>
+    
+    <div class="badges">
+      <a class="badge" href="https://ddkits.github.io/apexcasinotycoon-site" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>Play on the web</span></a>
+      
+      <a class="badge" data-when="all android" href="https://play.google.com/store/apps/details?id=io.reallexi.apexcasinotycoon" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5-9-8.5zm10.2 9.7L16.6 15l3.6-2.1c.9-.5.9-1.3 0-1.8L16.6 9l-2.4 2.3 1.1 1.2-1.1.7zM5.3 2.6l9.7 9.4 2.2-2.1L5.3 2.6zm0 18.8L17.2 14l-2.2-2.1-9.7 9.5z" fill="currentColor"/></svg><span>Google Play</span></a>
+    </div>
+  </div>
+</section>
+<section id="experience" class="features" aria-labelledby="feat">
+  <h2 id="feat">What you get</h2>
+  <div class="grid">
+    <article class="card"><span class="glyph" aria-hidden="true">🌊</span><p>Expand your empire from one motel to fifty countries</p></article>
+    <article class="card"><span class="glyph" aria-hidden="true">🏄</span><p>Manage daily bills, operating costs, and net profit</p></article>
+    <article class="card"><span class="glyph" aria-hidden="true">⭐</span><p>Build casino cages and fit them out with counters</p></article>
+    <article class="card"><span class="glyph" aria-hidden="true">🐬</span><p>Maintain gaming licenses and your reputation</p></article>
+    <article class="card"><span class="glyph" aria-hidden="true">🎬</span><p>Earn screen banner ads; VIP members see no ads</p></article>
+    <article class="card"><span class="glyph" aria-hidden="true">🏆</span><p><span data-when="all">Available on web, iOS, Android, and Facebook</span><span data-when="ios">Available on web, iOS, your device, and Facebook</span><span data-when="android">Available on web, your device, Android, and Facebook</span></p></article>
+  </div>
+</section>
+
+
+
+
+<section class="member" aria-labelledby="member-h">
+  <h2 id="member-h">Membership</h2>
+  <p>Build a casino resort empire. Play offline; sync and ads need internet. A banner may appear on Earn; VIP members see no ads.</p>
+</section>
+<section id="download" class="support" aria-labelledby="support-h">
+  
+  
+  <h2 id="support-h">Support</h2>
+  <p>Questions, bug reports, refund or data requests: <a href="mailto:admin@reallexi.io">admin@reallexi.io</a>. See <a href="./support.html">Support</a>.</p>
+  <h2>Legal</h2>
+  <ul class="legal">
+    <li><a href="./privacy.html">Privacy policy</a></li>
+    <li><a href="./terms.html">Terms of service</a></li>
+    <li><a href="./eula.html">End-user licence agreement</a></li>
+    <li><a href="./refunds.html">Refund policy</a></li>
+    <li><a href="./children.html">Children's privacy</a></li>
+    <li><a href="./cookies.html">Storage and cookies</a></li>
+    <li><a href="./delete-account.html">Delete your data</a></li>
+    <li><a href="./imprint.html">Imprint</a></li>
+  </ul>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Apex Casino Tycoon",
+  "description": "Build a casino, hotel and resort empire from one roadside motel to fifty countries. Deep tycoon simulation with real casino mathematics.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Web, iOS, Android",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Reallexi LLC",
+    "email": "admin@reallexi.io"
+  }
+}
+</script>
+</main>
+<footer>
+  <p>© 2026 Reallexi LLC · <a href="mailto:admin@reallexi.io">admin@reallexi.io</a></p>
+  <p><a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a> · <a href="./eula.html">EULA</a> · <a href="./refunds.html">Refunds</a> · <a href="./children.html">Children</a> · <a href="./cookies.html">Storage</a> · <a href="./delete-account.html">Delete data</a> · <a href="./imprint.html">Imprint</a></p>
+  
+</footer>
+<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'google_translate_element');}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ddkits.github.io/apexcasinotycoon-site/sitemap.xml

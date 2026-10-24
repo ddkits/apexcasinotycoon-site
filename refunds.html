@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-store="all">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refund policy — Apex Casino Tycoon</title>
+<meta name="description" content="How refunds work for Apex Casino Tycoon.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#12302e">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="canonical" href="https://ddkits.github.io/apexcasinotycoon-site/refunds.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apex Casino Tycoon">
+<meta property="og:title" content="Refund policy — Apex Casino Tycoon">
+<meta property="og:description" content="How refunds work for Apex Casino Tycoon.">
+<meta property="og:url" content="https://ddkits.github.io/apexcasinotycoon-site/refunds.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
+<meta name="twitter:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
+<style>
+  :root { color-scheme: light dark; --bg:#ffffff; --fg:#17202a; --dim:#4a5560; --accent:#0a5dc2; --line:#7d8794; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0f14; --fg:#e8edf2; --dim:#9aa7b4; --accent:#6ab1ff; --line:#6b7683; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .skip { position:absolute; left:-9999px; }
+  .skip:focus { left:8px; top:8px; padding:8px 12px; background:var(--accent); color:#fff; z-index:10; }
+  header, main, footer { max-width:46rem; margin:0 auto; padding:1.5rem 1.25rem; }
+  /* A design identity every non-landing page carries too, not just index: a coloured top stripe,
+     an accented brand mark, and a left-border marker on every section heading -- all off the same
+     --accent config/site-design.json already drives, so a palette redesign actually shows up
+     everywhere, not just behind the hero. */
+  header { display:flex; flex-wrap:wrap; gap:1rem; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--line); border-top:4px solid var(--accent); }
+  nav a { margin-right:1rem; }
+  a { color:var(--accent); }
+  a:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .5rem; }
+  h2 { font-size:1.25rem; margin-top:2rem; padding-left:.75rem; border-left:.3rem solid var(--accent); }
+  .brand { font-weight:700; font-size:1.05rem; color:var(--accent); text-decoration:none; }
+  .updated { color:var(--dim); font-size:.9rem; }
+  /* Google's widget injects a top banner frame while a translation is active, which pushes body
+     down by its own height unless suppressed -- and re-colours <body> itself, so both are pinned. */
+  .translate { font-size:.85rem; max-width:11rem; }
+  .goog-te-banner-frame { display:none !important; }
+  body { top:0 !important; }
+  footer { border-top:1px solid var(--line); color:var(--dim); font-size:.9rem; }
+  footer .social { display:flex; gap:.9rem; margin-top:.5rem; }
+  footer .social a { display:inline-flex; color:var(--dim); }
+  footer .social a:hover, footer .social a:focus-visible { color:var(--accent); }
+  footer .social svg { width:1.4rem; height:1.4rem; fill:currentColor; }
+  ul { padding-left:1.25rem; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+  [data-when] { display:none; }
+  html[data-store="all"] [data-when~="all"],
+  html[data-store="ios"] [data-when~="ios"],
+  html[data-store="android"] [data-when~="android"] { display:inline; }
+  html[data-store="all"] .badge[data-when~="all"],
+  html[data-store="ios"] .badge[data-when~="ios"],
+  html[data-store="android"] .badge[data-when~="android"] { display:inline-flex; }
+</style>
+<script>(function(){var m=/[?&]platform=(ios|android|web)\b/.exec(location.search),p=m&&m[1];
+if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
+:(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
+if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+// Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
+// runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
+// and focus trapping come free with showModal(); only the backdrop click and the close button need
+// wiring by hand.
+document.addEventListener('click',function(e){
+  var f=e.target.closest('[data-gallery-filter]');
+  if(f){var key=f.getAttribute('data-gallery-filter');document.querySelectorAll('[data-gallery-filter]').forEach(function(b){b.setAttribute('aria-pressed',String(b===f));});document.querySelectorAll('[data-gallery-category]').forEach(function(card){card.hidden=key!=='all'&&card.getAttribute('data-gallery-category')!==key;});return;}
+  var t=e.target.closest('.thumb');
+  if(t){var d=document.querySelector('.lightbox');if(!d)return;var img=d.querySelector('img');
+    img.src=t.getAttribute('data-full');img.alt=t.getAttribute('aria-label')||'';d.showModal();return;}
+  if(e.target.closest('.lightbox-close')){var d2=e.target.closest('.lightbox');if(d2)d2.close();return;}
+  if(e.target.classList&&e.target.classList.contains('lightbox'))e.target.close();
+});})();</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <a class="brand" href="./">Apex Casino Tycoon</a>
+  <nav aria-label="Site"><a href="./">Home</a><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./support.html">Support</a></nav>
+  <div id="google_translate_element" class="translate" aria-label="Translate this page"></div>
+</header>
+<main id="main">
+<h1>Refund policy</h1>
+<p class="updated">Last updated 2026-10-24</p>
+
+<p><strong>All purchases are made through <span data-when="all">Apple and Google</span><span data-when="ios">Apple</span><span data-when="android">Google</span>, so refunds are handled by <span data-when="all">them</span><span data-when="ios">Apple</span><span data-when="android">Google</span> — not by us.</strong> We never receive your payment details and cannot charge or refund your card directly.</p>
+<h2>How to request one</h2>
+<ul>
+  <span data-when="all ios"><li><strong>Apple (App Store):</strong> <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>, or Settings → your name → Media &amp; Purchases → Purchase History.</li></span>
+  <span data-when="all android"><li><strong>Google (Play):</strong> Play Store → Menu → Payments &amp; subscriptions → Budget &amp; order history, or <a href="https://support.google.com/googleplay/answer/2479637">Google's refund page</a>.</li></span>
+</ul>
+
+<p>Statutory rights — including the EU/UK 14-day right of withdrawal for digital purchases — always apply. If a store declines a refund you believe is owed, write to <a href="mailto:admin@reallexi.io">admin@reallexi.io</a> and we will help.</p>
+<p>Cancelling a membership stops future renewals; it does not retroactively refund the current period unless the store or the law says otherwise.</p>
+
+</main>
+<footer>
+  <p>© 2026 Reallexi LLC · <a href="mailto:admin@reallexi.io">admin@reallexi.io</a></p>
+  <p><a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a> · <a href="./eula.html">EULA</a> · <a href="./refunds.html">Refunds</a> · <a href="./children.html">Children</a> · <a href="./cookies.html">Storage</a> · <a href="./delete-account.html">Delete data</a> · <a href="./imprint.html">Imprint</a></p>
+  
+</footer>
+<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',autoDisplay:false},'google_translate_element');}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</body>
+</html>
