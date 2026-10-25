@@ -18,8 +18,8 @@
 <meta property="og:description" content="Build a casino, hotel and resort empire from one roadside motel to fifty countries. Deep tycoon simulation with real casino mathematics.">
 <meta property="og:url" content="https://ddkits.github.io/apexcasinotycoon-site/">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="og:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
-<meta name="twitter:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/feature-graphic.jpg">
+<meta property="og:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/gameplay/hero.webp">
+<meta name="twitter:image" content="https://ddkits.github.io/apexcasinotycoon-site/assets/gameplay/hero.webp">
 <style>
   :root { color-scheme: light dark; --bg:#ffffff; --fg:#17202a; --dim:#4a5560; --accent:#0a5dc2; --line:#7d8794; }
   @media (prefers-color-scheme: dark) { :root { --bg:#0b0f14; --fg:#e8edf2; --dim:#9aa7b4; --accent:#6ab1ff; --line:#6b7683; } }
@@ -72,9 +72,10 @@
   /* layout: full-bleed -- the original cover-image hero with white text over a dark scrim. */
   body.layout-full-bleed header { max-width:none; position:absolute; inset:0 0 auto 0; border:0; z-index:2; color:#fff; }
   body.layout-full-bleed header .brand, body.layout-full-bleed header nav a { color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.5); }
-  .layout-full-bleed .hero { position:relative; min-height:82vh; display:grid; place-items:center; background:#0B1220 center/cover no-repeat; color:#fff; text-align:center; }
+  .layout-full-bleed .hero { position:relative; min-height:82vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:radial-gradient(ellipse at 50% 85%, #263b46 0%, #0b1220 68%); color:#fff; text-align:center; overflow:hidden; }
   .layout-full-bleed .hero-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,12,21,.35) 0%, rgba(7,12,21,.15) 40%, rgba(7,12,21,.85) 100%); }
   .layout-full-bleed .hero-inner { position:relative; padding:6rem 1.25rem 3rem; max-width:52rem; }
+  .hero-gameplay { position:relative; z-index:1; display:block; width:min(92vw, 70rem); max-height:52vh; object-fit:contain; margin:0 auto 2rem; border:1px solid rgba(255,255,255,.25); border-radius:1rem; box-shadow:0 2rem 5rem rgba(0,0,0,.48), 0 0 3rem rgba(242,199,108,.12); }
   .layout-full-bleed .lockup { filter:drop-shadow(0 4px 18px rgba(0,0,0,.45)); }
   .layout-full-bleed .tagline { font-size:clamp(1.15rem, 2.6vw, 1.6rem); font-weight:700; margin:1rem 0 .5rem; color:#FFD770; text-shadow:0 2px 12px rgba(0,0,0,.5); }
   .layout-full-bleed .lede { max-width:40rem; margin:0 auto 1.5rem; color:#EDF1F7; text-shadow:0 1px 8px rgba(0,0,0,.6); }
@@ -174,7 +175,9 @@
   .video-card video { display:block; width:100%; background:#080a0d; }
   .video-card figcaption { padding:.8rem 1rem; color:#d5d6d6; }
   .landing .gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr)); gap:1rem; }
-  .gallery-grid img { display:block; width:100%; aspect-ratio:16/10; object-fit:cover; }
+  .gallery-grid img { display:block; width:100%; height:auto; max-height:660px; object-fit:contain; background:#10151d; }
+  .gallery-card { display:flex; flex-direction:column; }
+  .gallery-card figcaption { flex:1; }
   @media (max-width:44rem) { .video-grid { grid-template-columns:1fr; } .landing .trailer { padding:2rem 1.2rem; } }
   @media (max-width:44rem) { body.landing header { padding:.85rem 1rem; align-items:center; } body.landing header nav { gap:.7rem; font-size:.82rem; } .layout-split .hero-split { min-height:28rem; padding:4rem 1.2rem 2rem; } .landing .features, .landing .gallery, .landing .support { padding:2rem 1.2rem; } }
   @media (max-width:40rem) { .legal { columns:1; } .layout-full-bleed .hero { min-height:70vh; } }
@@ -229,6 +232,7 @@ document.addEventListener('click',function(e){
       <a class="badge" data-when="all android" href="https://play.google.com/store/apps/details?id=io.reallexi.apexcasinotycoon" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17l9-8.5-9-8.5zm10.2 9.7L16.6 15l3.6-2.1c.9-.5.9-1.3 0-1.8L16.6 9l-2.4 2.3 1.1 1.2-1.1.7zM5.3 2.6l9.7 9.4 2.2-2.1L5.3 2.6zm0 18.8L17.2 14l-2.2-2.1-9.7 9.5z" fill="currentColor"/></svg><span>Google Play</span></a>
     </div>
   </div>
+  <img class="hero-gameplay" src="assets/gameplay/hero.webp" width="1280" height="800" fetchpriority="high" alt="Actual Apex Casino Tycoon game screen showing a roadside motel and resort build menu">
 </section>
 <section id="experience" class="features" aria-labelledby="feat">
   <h2 id="feat">What you get</h2>
