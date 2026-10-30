@@ -65,6 +65,15 @@
 if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
 :(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
 if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+document.addEventListener('DOMContentLoaded',function(){(function scopeSiteLinks(document,location,platform){
+ if(platform!=='ios'&&platform!=='android')return;
+ for(const link of document.querySelectorAll('a[href]')){
+  const raw=link.getAttribute('href');if(!raw||raw.startsWith('#'))continue;
+  const url=new URL(raw,location.href);
+  if(url.origin!==location.origin||!['http:','https:'].includes(url.protocol))continue;
+  url.searchParams.set('platform',platform);link.setAttribute('href',url.href);
+ }
+})(document,location,p);});
 // Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
 // runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
 // and focus trapping come free with showModal(); only the backdrop click and the close button need
@@ -88,12 +97,13 @@ document.addEventListener('click',function(e){
 </header>
 <main id="main">
 <h1>Privacy policy</h1>
-<p class="updated">Last updated 2026-10-24</p>
+<p class="updated">Last updated 2026-10-30</p>
 
-<p>Apex Casino Tycoon stores your account data on our server so it can sync between your devices. We collect only what the product needs to function.</p>
+<p><strong>Your Apex Casino Tycoon progress stays on your device.</strong> Your content and settings are stored in the game's own storage on your phone, tablet or computer. Optional account sign-in uses our account service; its data is described below and is separate from your local progress. Delete local data through the game's save settings or by uninstalling it.</p>
 <h2>What we collect</h2>
 <ul>
-  <li><strong>Content you create:</strong> stored on our server, tied to your account.</li>
+  <li><strong>Optional account sign-in:</strong> <span data-when="all">Apple sign-in on Apple devices or Google sign-in on Android</span><span data-when="ios">Sign in with Apple</span><span data-when="android">Google sign-in</span> sends a provider credential to our account service for verification. The service stores your account identifier, your name or email if you share it, a session token, and your acceptance of these policies. Account sign-in is separate from the content saved on your device. Contact us below to request access or deletion of account information.</li>
+  <li><strong>Content you create:</strong> stored only on your device; separate from optional account sign-in.</li>
   
   
   <li><strong>Your photo library:</strong> never read. The game does not look at, list or open the photos already on the device, and it asks for no permission that would let it.</li>

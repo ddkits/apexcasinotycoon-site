@@ -65,6 +65,15 @@
 if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
 :(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
 if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+document.addEventListener('DOMContentLoaded',function(){(function scopeSiteLinks(document,location,platform){
+ if(platform!=='ios'&&platform!=='android')return;
+ for(const link of document.querySelectorAll('a[href]')){
+  const raw=link.getAttribute('href');if(!raw||raw.startsWith('#'))continue;
+  const url=new URL(raw,location.href);
+  if(url.origin!==location.origin||!['http:','https:'].includes(url.protocol))continue;
+  url.searchParams.set('platform',platform);link.setAttribute('href',url.href);
+ }
+})(document,location,p);});
 // Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
 // runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
 // and focus trapping come free with showModal(); only the backdrop click and the close button need
@@ -88,7 +97,7 @@ document.addEventListener('click',function(e){
 </header>
 <main id="main">
 <h1>Children's privacy</h1>
-<p class="updated">Last updated 2026-10-24</p>
+<p class="updated">Last updated 2026-10-30</p>
 
 <p>Apex Casino Tycoon is rated <strong>18+</strong> <span data-when="all">(Mature 17+ on Google Play, 18+ on the App Store)</span><span data-when="ios">(18+ on the App Store)</span><span data-when="android">(Mature 17+ on Google Play)</span>.</p>
 <p>It is not directed at children under 13. We do not knowingly collect personal information from children.</p>

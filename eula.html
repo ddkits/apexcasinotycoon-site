@@ -65,6 +65,15 @@
 if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
 :(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
 if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+document.addEventListener('DOMContentLoaded',function(){(function scopeSiteLinks(document,location,platform){
+ if(platform!=='ios'&&platform!=='android')return;
+ for(const link of document.querySelectorAll('a[href]')){
+  const raw=link.getAttribute('href');if(!raw||raw.startsWith('#'))continue;
+  const url=new URL(raw,location.href);
+  if(url.origin!==location.origin||!['http:','https:'].includes(url.protocol))continue;
+  url.searchParams.set('platform',platform);link.setAttribute('href',url.href);
+ }
+})(document,location,p);});
 // Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
 // runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
 // and focus trapping come free with showModal(); only the backdrop click and the close button need
@@ -88,7 +97,7 @@ document.addEventListener('click',function(e){
 </header>
 <main id="main">
 <h1>End-user licence agreement</h1>
-<p class="updated">Last updated 2026-10-24</p>
+<p class="updated">Last updated 2026-10-30</p>
 
 <p>This EULA is between you and Reallexi LLC.<span data-when="all ios"> If you installed from the App Store, Apple's <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Standard EULA</a> also applies and prevails where it conflicts.</span></p>
 <h2>Grant</h2>

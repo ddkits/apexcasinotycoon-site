@@ -65,6 +65,15 @@
 if(!p){var u=navigator.userAgent||'';p=/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios'
 :(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)?'ios':'';}
 if(p==='ios'||p==='android')document.documentElement.setAttribute('data-store',p);
+document.addEventListener('DOMContentLoaded',function(){(function scopeSiteLinks(document,location,platform){
+ if(platform!=='ios'&&platform!=='android')return;
+ for(const link of document.querySelectorAll('a[href]')){
+  const raw=link.getAttribute('href');if(!raw||raw.startsWith('#'))continue;
+  const url=new URL(raw,location.href);
+  if(url.origin!==location.origin||!['http:','https:'].includes(url.protocol))continue;
+  url.searchParams.set('platform',platform);link.setAttribute('href',url.href);
+ }
+})(document,location,p);});
 // Screenshot/key-art thumbnails open full-size in a native <dialog> -- event delegation, so this
 // runs safely in <head> before the buttons and dialog even exist in the DOM yet. Escape-to-close
 // and focus trapping come free with showModal(); only the backdrop click and the close button need
@@ -88,14 +97,15 @@ document.addEventListener('click',function(e){
 </header>
 <main id="main">
 <h1>Delete your data</h1>
-<p class="updated">Last updated 2026-10-24</p>
+<p class="updated">Last updated 2026-10-30</p>
 
-<p>You can delete your account and all associated data at any time:</p>
+<p>Your data never leaves your device, so <strong>you delete it yourself</strong>:</p>
 <ul>
-  <li>In the game: Settings → Account → Delete account. This removes your account and its data permanently.</li>
-  <li>Or write to <a href="mailto:admin@reallexi.io">admin@reallexi.io</a> from the address on the account.</li>
+  <li>In the game: Settings → Delete all data.</li>
+  <li>Or uninstall Apex Casino Tycoon — that removes its storage entirely.</li>
+  <li>If you use device backup <span data-when="all">(iCloud, Google One)</span><span data-when="ios">(iCloud)</span><span data-when="android">(Google One)</span>, also delete the backup copy in your device settings.</li>
 </ul>
-<p>Deletion is permanent and takes effect within 30 days across backups. Purchase records we must keep for tax and accounting law are retained in anonymised form.</p>
+<p>We hold no copy of your locally saved content.</p><p>Optional account data is separate. To request deletion of your account identifier, profile and session information, contact <a href="mailto:admin@reallexi.io">admin@reallexi.io</a> from the address associated with the account. Deleting a local save or uninstalling does not delete an account held by the account service.</p>
 <p>Purchases are held by <span data-when="all">Apple and Google</span><span data-when="ios">Apple</span><span data-when="android">Google</span> under <span data-when="all">their</span><span data-when="ios">its</span><span data-when="android">its</span> own policies; deleting your data here does not cancel a subscription — cancel that in your device's subscription settings.</p>
 </main>
 <footer>
